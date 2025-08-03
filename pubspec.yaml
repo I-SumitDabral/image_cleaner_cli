@@ -15,4 +15,4 @@ dev_dependencies:
   test: ^1.25.5
 
 executables:
-  image_cleaner_cli: bin/image_cleaner_cli.dart
+  image_cleaner_cli:
