@@ -1,13 +1,13 @@
 /// A utility module for handling image asset analysis in Flutter projects.
-/// 
+///
 /// This file includes helper methods for:
 /// - Scanning asset directories
 /// - Identifying image formats
 /// - Finding unused images by cross-referencing project code
-/// 
+///
 /// Author: Sumit Dabral
 /// Website: https://sumitdabral.space
-/// License: MIT 
+/// License: MIT
 
 import 'dart:io';
 import 'package:path/path.dart' as p;
@@ -29,7 +29,8 @@ String formatFileSize(int bytes) {
 /// Scans [assetsDir] for image files and returns a list of image paths
 /// that are **not referenced** in any `.dart`, `.yaml`, `.json`, or `.html`
 /// files inside the `lib/` folder of the [projectRoot].
-Future<List<String>> getImages(Directory assetsDir, Directory projectRoot) async {
+Future<List<String>> getImages(
+    Directory assetsDir, Directory projectRoot) async {
   final allImages = <String>[];
   final usedImages = <String>{};
 
@@ -62,7 +63,8 @@ Future<List<String>> getImages(Directory assetsDir, Directory projectRoot) async
     }
   }
 
-  final unusedImages = allImages.where((img) => !usedImages.contains(img)).toList();
+  final unusedImages =
+      allImages.where((img) => !usedImages.contains(img)).toList();
   return unusedImages;
 }
 
@@ -70,11 +72,11 @@ Future<List<String>> getImages(Directory assetsDir, Directory projectRoot) async
 bool _isImage(String path) {
   final lower = path.toLowerCase();
   return lower.endsWith('.png') ||
-         lower.endsWith('.jpg') ||
-         lower.endsWith('.jpeg') ||
-         lower.endsWith('.webp') ||
-         lower.endsWith('.gif') ||
-         lower.endsWith('.svg');
+      lower.endsWith('.jpg') ||
+      lower.endsWith('.jpeg') ||
+      lower.endsWith('.webp') ||
+      lower.endsWith('.gif') ||
+      lower.endsWith('.svg');
 }
 
 /// Recursively collects all relevant code files from [root] directory,
@@ -85,9 +87,9 @@ Future<List<File>> _getAllCodeFiles(Directory root) async {
   await for (final file in root.list(recursive: true)) {
     if (file is File &&
         (file.path.endsWith('.dart') ||
-         file.path.endsWith('.yaml') ||
-         file.path.endsWith('.json') ||
-         file.path.endsWith('.html'))) {
+            file.path.endsWith('.yaml') ||
+            file.path.endsWith('.json') ||
+            file.path.endsWith('.html'))) {
       codeFiles.add(file);
     }
   }

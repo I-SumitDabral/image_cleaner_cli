@@ -1,5 +1,5 @@
 /// Generates an HTML page displaying image assets in a card-based layout.
-/// 
+///
 /// This HTML is meant to be served via a local server for asset review and cleanup.
 /// It includes features like:
 /// - Select All

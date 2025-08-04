@@ -1,5 +1,5 @@
 /// Entry point for the Image Cleaner CLI tool.
-/// 
+///
 /// This tool helps identify and optionally delete unused images
 /// in your Flutter/Dart project's assets directory.
 ///

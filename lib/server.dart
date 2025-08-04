@@ -17,7 +17,8 @@ final assetsDir = Directory('assets');
 ///
 /// Automatically opens the browser to preview the UI.
 Future<void> startServer(String folderPath) async {
-  final assetsDir = Directory('$folderPath/assets'); // 👈 use passed folder path
+  final assetsDir =
+      Directory('$folderPath/assets'); // 👈 use passed folder path
   print('🚀 Scanning folder: ${assetsDir.path}');
 
   if (!await assetsDir.exists()) {
