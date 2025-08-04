@@ -1,13 +1,3 @@
-/// A utility module for handling image asset analysis in Flutter projects.
-///
-/// This file includes helper methods for:
-/// - Scanning asset directories
-/// - Identifying image formats
-/// - Finding unused images by cross-referencing project code
-///
-/// Author: Sumit Dabral
-/// Website: https://sumitdabral.space
-/// License: MIT
 
 import 'dart:io';
 import 'package:path/path.dart' as p;

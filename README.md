@@ -10,7 +10,7 @@ Easily identify unused images and clean them up using a local interactive HTML p
 
 ### 🎬 Demo
 
-![image_cleaner_cli demo](https://github.com/I-SumitDabral/image_cleaner_cli/blob/main/doc-assets/image_cleaner_cli_demo.gif)
+![image_cleaner_cli demo](https://raw.githubusercontent.com/I-SumitDabral/image_cleaner_cli/main/doc-assets/image_cleaner_cli_demo.gif)
 
 > 📸 The CLI detects unused images and spins up a local HTML preview for you to review and delete them safely.
 

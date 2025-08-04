@@ -13,6 +13,7 @@
 /// - `--help` or `-h`: Displays usage information.
 ///
 /// If no `<project_folder>` is provided, the current directory is used.
+library image_cleaner_cli;
 
 import 'dart:io';
 import 'package:image_cleaner_cli/server.dart';
