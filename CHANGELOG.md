@@ -10,3 +10,9 @@ All notable changes to this project will be documented in this file.
   - Scans `lib/` for image usages.
   - Lists unused images from the `assets/` folder.
   - Optional preview before deletion.
+
+## [0.0.2] - 2025-08-04
+### Added
+- Improved UI loader
+- Added proper documentation
+- Included a demo GIF in README

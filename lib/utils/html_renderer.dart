@@ -1,4 +1,21 @@
+/// Generates an HTML page displaying image assets in a card-based layout.
+/// 
+/// This HTML is meant to be served via a local server for asset review and cleanup.
+/// It includes features like:
+/// - Select All
+/// - Delete Selected (bulk delete)
+/// - Individual delete buttons
+/// - Image size display
+///
+/// The HTML also includes a full-screen loader that shows up during deletion.
+///
+/// Parameters:
+/// - [images]: List of image file names (e.g., ['logo.png']).
+/// - [imageSizes]: A map of image file names to their size strings (e.g., {'logo.png': '120 KB'}).
+///
+/// Returns: A complete HTML document as a string.
 String generateHtml(List<String> images, Map<String, String> imageSizes) {
+  // Generate individual image cards with checkboxes, preview, and delete button
   final cards = images.map((name) {
     final imagePath = '/assets/$name';
     final sizeKb = (imageSizes[name] ?? "0");
@@ -17,6 +34,7 @@ String generateHtml(List<String> images, Map<String, String> imageSizes) {
     ''';
   }).join();
 
+  // Show controls only if there are images
   final controls = images.isEmpty
       ? '<p style="font-size: 18px; color: #555;">📂 No images found in your project.</p>'
       : '''
@@ -26,13 +44,15 @@ String generateHtml(List<String> images, Map<String, String> imageSizes) {
       </div>
   ''';
 
+  // Final HTML output including styles, JS logic, and loader
   return '''
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Asset Viewer</title>
+  <title>Image Cleaner Asset Viewer</title>
   <link rel="icon" href="data:,">
   <style>
+    /* Basic layout and card styles */
     body {
       font-family: sans-serif;
       padding: 20px;
@@ -66,8 +86,9 @@ String generateHtml(List<String> images, Map<String, String> imageSizes) {
     .image-wrapper img {
       width: 100%;
       height: 100%;
-      object-fit: cover;
+      object-fit: contain;
       display: block;
+      background: #fafafa;
     }
     .size-label {
       position: absolute;
@@ -117,9 +138,27 @@ String generateHtml(List<String> images, Map<String, String> imageSizes) {
       gap: 10px;
       align-items: center;
     }
+
+    /* Fullscreen loader for delete action */
+    #loader {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100vh;
+      width: 100vw;
+      background: rgba(255,255,255,0.7);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      z-index: 9999;
+      display: none;
+    }
   </style>
 </head>
 <body>
+  <div id="loader">⏳ Deleting, please wait...</div>
+
   <h1>Image Asset Viewer</h1>
   $controls
   <div class="container">
@@ -127,6 +166,7 @@ String generateHtml(List<String> images, Map<String, String> imageSizes) {
   </div>
 
   <script>
+    // Toggle all checkboxes when "Select All" is clicked
     const selectAll = document.getElementById('select-all');
     if (selectAll) {
       selectAll.addEventListener('change', function() {
@@ -134,8 +174,15 @@ String generateHtml(List<String> images, Map<String, String> imageSizes) {
       });
     }
 
+    // Show loader when deleting
+    function showLoader() {
+      document.getElementById('loader').style.display = 'flex';
+    }
+
+    // Delete a single image or multiple
     function confirmDelete(files) {
       if (confirm('Are you sure you want to delete ' + files.join(', ') + '?')) {
+        showLoader();
         fetch('/delete', {
           method: 'POST',
           headers: {'Content-Type': 'application/json'},
@@ -144,6 +191,7 @@ String generateHtml(List<String> images, Map<String, String> imageSizes) {
       }
     }
 
+    // Collect selected images and call confirmDelete
     function bulkDelete() {
       const files = [...document.querySelectorAll('.img-checkbox')]
                       .filter(cb => cb.checked)

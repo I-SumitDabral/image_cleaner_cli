@@ -1,9 +1,21 @@
-import 'dart:io';
+/// A utility module for handling image asset analysis in Flutter projects.
+/// 
+/// This file includes helper methods for:
+/// - Scanning asset directories
+/// - Identifying image formats
+/// - Finding unused images by cross-referencing project code
+/// 
+/// Author: Sumit Dabral
+/// Website: https://sumitdabral.space
+/// License: MIT 
 
+import 'dart:io';
 import 'package:path/path.dart' as p;
 
+/// A reference to the default assets directory (`assets/`).
 final assetsDir = Directory('assets');
 
+/// Formats a file size [bytes] into a human-readable string.
 String formatFileSize(int bytes) {
   if (bytes >= 1024 * 1024) {
     return '${(bytes / (1024 * 1024)).toStringAsFixed(2)} MB';
@@ -14,17 +26,9 @@ String formatFileSize(int bytes) {
   }
 }
 
-// Future<List<String>> getImages(Directory assetsDir) async {
-  
-//   if (!await assetsDir.exists()) return [];
-//   return assetsDir
-//       .listSync()
-//       .whereType<File>()
-//       .where((f) => f.path.endsWith('.png') || f.path.endsWith('.jpg') || f.path.endsWith('.jpeg'))
-//       .map((f) => f.uri.pathSegments.last)
-//       .toList();
-// }
-
+/// Scans [assetsDir] for image files and returns a list of image paths
+/// that are **not referenced** in any `.dart`, `.yaml`, `.json`, or `.html`
+/// files inside the `lib/` folder of the [projectRoot].
 Future<List<String>> getImages(Directory assetsDir, Directory projectRoot) async {
   final allImages = <String>[];
   final usedImages = <String>{};
@@ -36,12 +40,11 @@ Future<List<String>> getImages(Directory assetsDir, Directory projectRoot) async
     }
   }
 
-  // Only scan lib folder for code references
   final libDir = Directory(p.join(projectRoot.path, 'lib'));
 
   if (!await libDir.exists()) {
     print('⚠️ Warning: lib folder does not exist: ${libDir.path}');
-    return allImages; // Return all images (considered unused)
+    return allImages;
   }
 
   final codeFiles = await _getAllCodeFiles(libDir);
@@ -63,7 +66,7 @@ Future<List<String>> getImages(Directory assetsDir, Directory projectRoot) async
   return unusedImages;
 }
 
-
+/// Checks if the file at [path] is a supported image type.
 bool _isImage(String path) {
   final lower = path.toLowerCase();
   return lower.endsWith('.png') ||
@@ -74,6 +77,8 @@ bool _isImage(String path) {
          lower.endsWith('.svg');
 }
 
+/// Recursively collects all relevant code files from [root] directory,
+/// including `.dart`, `.yaml`, `.json`, and `.html`.
 Future<List<File>> _getAllCodeFiles(Directory root) async {
   final codeFiles = <File>[];
 

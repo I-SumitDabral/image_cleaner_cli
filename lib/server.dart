@@ -8,8 +8,14 @@ import 'package:image_cleaner_cli/utils/html_renderer.dart';
 final int port = 8080;
 final assetsDir = Directory('assets');
 
-
-
+/// Starts a local HTTP server that serves and manages images in the "assets" folder
+/// located inside the given [folderPath].
+///
+/// - Serves images at `/assets/{filename}`
+/// - Serves a simple HTML UI for preview and deletion
+/// - Handles POST `/delete` requests to remove selected images from disk
+///
+/// Automatically opens the browser to preview the UI.
 Future<void> startServer(String folderPath) async {
   final assetsDir = Directory('$folderPath/assets'); // 👈 use passed folder path
   print('🚀 Scanning folder: ${assetsDir.path}');
@@ -26,7 +32,7 @@ Future<void> startServer(String folderPath) async {
   await for (HttpRequest request in server) {
     final path = request.uri.path;
 
-    // Serve image files
+    // Serve image files from assets
     if (path.startsWith('/assets/')) {
       final relative = path.replaceFirst('/assets/', '');
       final file = File('${assetsDir.path}/$relative');
@@ -43,7 +49,7 @@ Future<void> startServer(String folderPath) async {
       continue;
     }
 
-    // Delete image handler
+    // Handle image deletion via POST /delete
     if (path == '/delete' && request.method == 'POST') {
       final payload = await utf8.decoder.bind(request).join();
       final data = jsonDecode(payload);
@@ -86,7 +92,7 @@ Future<void> startServer(String folderPath) async {
       continue;
     }
 
-    // Serve HTML
+    // Serve the HTML UI with current image list and sizes
     final images = await getImages(assetsDir, Directory(folderPath));
     final imageSizes = {
       for (final name in images)
