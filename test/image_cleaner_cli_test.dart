@@ -12,12 +12,14 @@ void main() {
     setUp(() async {
       // Create temp dirs for assets and code
       tempDir = await Directory.systemTemp.createTemp('image_cleaner_test');
-      assetsDir = Directory('${tempDir.path}/assets')..createSync(recursive: true);
+      assetsDir = Directory('${tempDir.path}/assets')
+        ..createSync(recursive: true);
       codeDir = Directory('${tempDir.path}/lib')..createSync(recursive: true);
 
       // Create sample images
       File('${assetsDir.path}/used.png').writeAsStringSync('fakeimagecontent');
-      File('${assetsDir.path}/unused.png').writeAsStringSync('fakeimagecontent');
+      File('${assetsDir.path}/unused.png')
+          .writeAsStringSync('fakeimagecontent');
 
       // Create sample Dart code referencing only 'used.png'
       File('${codeDir.path}/main.dart').writeAsStringSync("""
