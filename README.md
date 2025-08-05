@@ -127,7 +127,7 @@ dart run bin/image_cleaner_cli.dart --folder /path/to/your/flutter/project
 
 ## 📌 Version
 
-**Current:** `0.0.2`  
+**Current:** `0.0.4`  
 Check [pub.dev → image_cleaner_cli](https://pub.dev/packages/image_cleaner_cli) for latest.
 
 ---
@@ -152,7 +152,7 @@ You can also use `image_cleaner_cli` **programmatically** in your project:
 
 ```yaml
 dependencies:
-  image_cleaner_cli: ^0.0.2
+  image_cleaner_cli: ^0.0.4
 ```
 
 ### Then run:
