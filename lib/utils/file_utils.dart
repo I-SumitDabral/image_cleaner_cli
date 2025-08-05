@@ -1,4 +1,3 @@
-
 import 'dart:io';
 import 'package:path/path.dart' as p;
 
@@ -26,7 +25,9 @@ Future<List<String>> getImages(
 
   await for (final file in assetsDir.list(recursive: true)) {
     if (file is File && _isImage(file.path)) {
-      final relativePath = file.path.replaceFirst('${assetsDir.path}/', '');
+      // Use package:path to get the relative path from assetsDir
+      final relativePath = p.relative(file.path, from: assetsDir.path)
+          .replaceAll('\\', '/'); // Normalize separators to '/'
       allImages.add(relativePath);
     }
   }

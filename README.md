@@ -1,140 +1,173 @@
 # 🧼 image_cleaner_cli
 
-A Dart CLI tool to **detect, preview, and delete unused image assets** from your Flutter project.
+A Dart CLI tool to **detect, preview, and delete unused image assets** in your Flutter project.
 
-Easily identify unused images and clean them up using a local interactive HTML preview!
+Easily identify unused images and clean them up with a **local interactive HTML preview**!
 
-> ⭐️ If you find this useful, consider giving it a **[GitHub star](https://github.com/I-SumitDabral/image_cleaner_cli)** — it helps others discover the project!
+> ⭐ If you find this tool useful, please give it a **[GitHub star](https://github.com/I-SumitDabral/image_cleaner_cli)** to help others discover it!
 
 ---
 
-### 🎬 Demo
+## 🎬 Demo
 
 ![image_cleaner_cli demo](https://raw.githubusercontent.com/I-SumitDabral/image_cleaner_cli/main/doc-assets/image_cleaner_cli_demo.gif)
 
-> 📸 The CLI detects unused images and spins up a local HTML preview for you to review and delete them safely.
+The CLI detects unused images and launches a local HTML page for you to review and selectively delete them.
 
 ---
 
-### ✅ Features
+## ✅ Features
 
-- 🔍 Detect unused images inside your Flutter project
-- 🧪 `--dry-run` mode to safely list images without deleting
-- 🌐 Starts a local HTML preview to review and delete unused assets
-- 🛠️ Simple CLI interface, no complex setup
-- ⚡ Works cross-platform (Windows, macOS, Linux)
+- Detect unused images in your Flutter project’s `assets/` folder.
+- Dry-run mode (`--dry-run`) to safely list unused images without deleting.
+- Launches a local web server with an interactive HTML preview of unused images.
+- Select and delete images through a browser UI.
+- Cross-platform support: Windows, macOS, Linux.
+- Simple CLI usage, no complex setup required.
 
 ---
 
-### 🚀 Installation
+## 🚀 Installation & Usage
 
-Activate from your local clone (or globally if published):
+### Method 1: Global Activation
 
-```bash
-dart pub global activate --source path .
-```
+Activate the CLI tool globally for easy access anywhere:
 
-Or run directly from local:
+dart pub global activate image_cleaner_cli
 
-```bash
+text
+
+Then run the tool using:
+
+image_cleaner_cli
+
+text
+
+Make sure your Dart Pub cache’s `bin` directory (e.g., `~/.pub-cache/bin`) is in your system PATH.
+
+---
+
+### Installing a Specific Version Globally
+
+Install a specific version globally by specifying the version number:
+
+dart pub global activate image_cleaner_cli <version>
+
+text
+
+Replace `<version>` with the desired version number, for example, `0.0.3`.
+
+---
+
+### Method 2: Run Locally
+
+Run the CLI directly from your project or tool clone without global install:
+
 dart run bin/image_cleaner_cli.dart
-```
+
+text
 
 ---
 
-### 📦 Usage
+### Running the CLI for a Specific Folder (if supported)
 
-#### Show help
+image_cleaner_cli --folder /path/to/your/project
 
-```bash
-dart run bin/image_cleaner_cli.dart --help
-```
+text
 
-#### Dry run (safe mode – no deletion)
+Or when running locally:
 
-```bash
-dart run bin/image_cleaner_cli.dart --dry-run
-```
+dart run bin/image_cleaner_cli.dart --folder /path/to/your/project
 
-#### Full run (with browser preview and deletion)
-
-```bash
-dart run bin/image_cleaner_cli.dart
-```
-
-This will:
-
-- Scan your `/assets` folder
-- Analyze image usage across Dart files
-- Launch a **local HTML page** (typically `http://localhost:8080`)
-- Let you preview and **select images for deletion**
-- Delete selected images after your confirmation
+text
 
 ---
 
-### 🖼️ HTML Preview Flow
+## 📦 CLI Options
 
-1. Run the CLI (without `--dry-run`)
-2. A local server opens in your browser (localhost:8080)
-3. Unused images are displayed in grid format
-4. Select images you want to delete
-5. Click the delete button — and done ✅
-
-> 🔐 Safe and manual: No image is deleted unless **you choose** it in the browser.
+| Flag        | Alias | Description                               |
+|-------------|-------|-------------------------------------------|
+| `--dry-run` | `-d`  | List unused images without deleting them  |
+| `--help`    | `-h`  | Show help and usage information            |
 
 ---
 
-### 💡 Example Output
+## 🖼️ How It Works
 
-**Dry run sample:**
+1. Scans the `assets/` folder for images.
+2. Analyzes image usage across your Flutter Dart source files.
+3. Starts a local server on `http://localhost:8080`.
+4. Opens a browser UI showing unused images.
+5. Select images and confirm deletion — safe, manual cleanup.
 
-```bash
+---
+
+## 💡 Example Output
+
+Dry run sample:
+
 📂 Using folder: /your/flutter/project
 🧪 Performing dry run...
 🗂️ Found 4 unused images:
- - assets/images/old_logo.png
- - assets/icons/unused_icon.svg
- - assets/images/temp/banner.jpg
- - assets/icons/trash.png
-```
+
+assets/images/old_logo.png
+
+assets/icons/unused_icon.svg
+
+assets/images/temp/banner.jpg
+
+assets/icons/trash.png
+
+text
 
 ---
 
-### 🛠️ CLI Options
+## 📁 Requirements
 
-| Flag        | Alias | Description                                 |
-|-------------|-------|---------------------------------------------|
-| `--dry-run` | `-d`  | List unused images without deleting them    |
-| `--help`    | `-h`  | Show help and usage information             |
+- A Flutter project with image assets stored in an `assets/` folder.
+- Images referenced as string paths inside Dart code files.
 
 ---
 
-### 📁 Project Expectations
+## 📌 Version
 
-This tool assumes:
-
-- You use a Flutter project
-- Image assets are stored inside the `assets/` folder
-- Images are referenced directly via strings in your Dart files
+Current: `0.0.2`
 
 ---
 
-### 📌 Version
-
-**Current Version:** `0.0.2`
-
----
-
-### 🔗 Repository
+## 🔗 Repository
 
 [GitHub – image_cleaner_cli](https://github.com/I-SumitDabral/image_cleaner_cli)
 
 ---
 
-### 👨‍💻 Maintainer
+## 👨‍💻 Maintainer
 
 Built with ❤️ by [Sumit Dabral](https://github.com/I-SumitDabral)
 
 ---
 
-> 💫 If this project helped you, do consider giving it a ⭐️ — it motivates further development!
+## 📌 Using as a Package Dependency
+
+If you want to use the functionality **programmatically** inside your Flutter or Dart project (not as a CLI), add `image_cleaner_cli` as a dependency in your `pubspec.yaml`:
+
+dependencies:
+image_cleaner_cli: ^0.0.2
+
+text
+
+Then run:
+
+dart pub get
+
+text
+
+or
+
+flutter pub get
+
+text
+
+---
+
+> 💫 If this tool helps you, please consider giving it a ⭐️ on GitHub to support continued development!
