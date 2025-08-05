@@ -36,7 +36,9 @@ Future<void> startServer(String folderPath) async {
     // Serve image files from assets
     if (path.startsWith('/assets/')) {
       final relative = path.replaceFirst('/assets/', '');
-      final file = File('${assetsDir.path}/$relative');
+final file = File(Platform.isWindows
+    ? '${assetsDir.path}\\$relative'.replaceAll('/', '\\')
+    : '${assetsDir.path}/$relative');
       if (await file.exists()) {
         request.response.headers.contentType =
             ContentType('image', file.path.endsWith('.jpg') ? 'jpeg' : 'png');
