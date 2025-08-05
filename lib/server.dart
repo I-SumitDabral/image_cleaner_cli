@@ -3,7 +3,9 @@ import 'dart:io';
 import 'package:image_cleaner_cli/utils/browser.dart';
 import 'package:image_cleaner_cli/utils/file_utils.dart';
 import 'package:image_cleaner_cli/utils/html_renderer.dart';
+
 final int port = 8080;
+
 /// Starts a local HTTP server that serves and manages images in the "assets" folder
 /// located inside the given [folderPath].
 ///
@@ -95,6 +97,7 @@ Future<void> startServer(String folderPath) async {
     await request.response.close();
   }
 }
+
 /// Example helper for getImages: returns a list of image paths RELATIVE to assetsDir
 ///
 /// Modify your actual getImages to use similar logic
@@ -115,9 +118,3 @@ Future<void> startServer(String folderPath) async {
 //   }
 //   return imagePaths;
 // }
-
-
-
-
-
-
