@@ -188,3 +188,16 @@ If this CLI saves you time and clutter, please consider:
 - ⭐ Starring the project on [GitHub](https://github.com/I-SumitDabral/image_cleaner_cli)
 - 📢 Sharing it with fellow developers
 - 🐛 Reporting issues or suggesting features
+
+## 📦 image_cleaner_cli
+
+[![Pub Version](https://img.shields.io/pub/v/image_cleaner_cli.svg)](https://pub.dev/packages/image_cleaner_cli)
+[![Pub Points](https://img.shields.io/pub/points/image_cleaner_cli.svg)](https://pub.dev/packages/image_cleaner_cli/score)
+[![Likes](https://img.shields.io/pub/likes/image_cleaner_cli.svg)](https://pub.dev/packages/image_cleaner_cli)
+[![GitHub Stars](https://img.shields.io/github/stars/I-SumitDabral/image_cleaner_cli.svg?style=social&label=Star)](https://github.com/I-SumitDabral/image_cleaner_cli)
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/I-SumitDabral/image_cleaner_cli/blob/main/LICENSE)
+
+<!-- Optional Badges -->
+[![Build Status](https://github.com/I-SumitDabral/image_cleaner_cli/actions/workflows/build.yml/badge.svg)](https://github.com/I-SumitDabral/image_cleaner_cli/actions)
+[![Code Coverage](https://codecov.io/gh/I-SumitDabral/image_cleaner_cli/branch/main/graph/badge.svg)](https://codecov.io/gh/I-SumitDabral/image_cleaner_cli)
+
