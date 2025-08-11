@@ -1,3 +1,5 @@
+import 'dart:io';
+
 /// Generates an HTML page displaying image assets in a card-based layout.
 ///
 /// This HTML is meant to be served via a local server for asset review and cleanup.
@@ -6,32 +8,75 @@
 /// - Delete Selected (bulk delete)
 /// - Individual delete buttons
 /// - Image size display
-///
-/// The HTML also includes a full-screen loader that shows up during deletion.
+/// - Special handling for SVG files (inline rendering to avoid path/MIME issues)
 ///
 /// Parameters:
 /// - [images]: List of image file names (e.g., ['logo.png']).
 /// - [imageSizes]: A map of image file names to their size strings (e.g., {'logo.png': '120 KB'}).
+/// - [absDirectoryPath]: Absolute path to the directory containing images (for reading SVG content).
+/// - [relDirectoryPath]: Relative path (from the HTML file) to the directory for normal <img> tags.
 ///
 /// Returns: A complete HTML document as a string.
-String generateHtml(List<String> images, Map<String, String> imageSizes) {
+String generateHtml(
+  List<String> images,
+  Map<String, String> imageSizes,
+  String absDirectoryPath, // e.g. "/Users/.../project/assets/"
+  String relDirectoryPath, // e.g. "/assets/"
+) {
   // Generate individual image cards with checkboxes, preview, and delete button
   final cards = images.map((name) {
-    final imagePath = '/assets/$name';
     final sizeKb = (imageSizes[name] ?? "0");
-    return '''
-      <div class="card">
-        <input type="checkbox" class="img-checkbox" value="$name" />
-        <div class="image-wrapper">
-          <span class="size-label">$sizeKb</span>
-          <img src="$imagePath" alt="$name" />
+
+    // Special handling for SVG files — read contents and inline them
+    if (name.toLowerCase().endsWith('.svg')) {
+      try {
+        // Read the SVG file contents directly from the absolute path
+        final svgContent = File('$absDirectoryPath$name').readAsStringSync();
+        return '''
+          <div class="card">
+            <input type="checkbox" class="img-checkbox" value="$name" />
+            <div class="image-wrapper">
+              <span class="size-label">$sizeKb</span>
+              $svgContent
+            </div>
+            <div class="actions">
+              <span title="$name">$name</span>
+              <button onclick="confirmDelete(['$name'])">🗑️</button>
+            </div>
+          </div>
+        ''';
+      } catch (e) {
+        // If reading fails (missing file, etc.), fallback to normal <img> rendering
+        return '''
+          <div class="card">
+            <input type="checkbox" class="img-checkbox" value="$name" />
+            <div class="image-wrapper">
+              <span class="size-label">$sizeKb</span>
+              <img src="$relDirectoryPath$name" alt="$name" />
+            </div>
+            <div class="actions">
+              <span title="$name">$name</span>
+              <button onclick="confirmDelete(['$name'])">🗑️</button>
+            </div>
+          </div>
+        ''';
+      }
+    } else {
+      // Non-SVG images use standard <img> tags with the relative path
+      return '''
+        <div class="card">
+          <input type="checkbox" class="img-checkbox" value="$name" />
+          <div class="image-wrapper">
+            <span class="size-label">$sizeKb</span>
+            <img src="$relDirectoryPath$name" alt="$name" />
+          </div>
+          <div class="actions">
+            <span title="$name">$name</span>
+            <button onclick="confirmDelete(['$name'])">🗑️</button>
+          </div>
         </div>
-        <div class="actions">
-          <span title="$name">$name</span>
-          <button onclick="confirmDelete(['$name'])">🗑️</button>
-        </div>
-      </div>
-    ''';
+      ''';
+    }
   }).join();
 
   // Show controls only if there are images
@@ -83,7 +128,7 @@ String generateHtml(List<String> images, Map<String, String> imageSizes) {
       border-radius: 12px 12px 0 0;
       position: relative;
     }
-    .image-wrapper img {
+    .image-wrapper img, .image-wrapper svg {
       width: 100%;
       height: 100%;
       object-fit: contain;

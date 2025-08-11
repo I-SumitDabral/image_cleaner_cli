@@ -94,7 +94,7 @@ dart run bin/image_cleaner_cli.dart --folder /path/to/your/flutter/project
 
 ## 🛠 How It Works
 
-1. Scans your `assets/` directory.
+1. Scans your `assets/` and `images/` directory.
 2. Finds image files not referenced in any `.dart` files.
 3. Starts a local web server (`http://localhost:8080`).
 4. Opens an interactive UI where you can:

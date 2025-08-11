@@ -9,16 +9,31 @@ final int port = 8080;
 /// Starts a local HTTP server that serves and manages images in the "assets" folder
 /// located inside the given [folderPath].
 ///
-/// - Serves images at `/assets/{filename}`
+/// - Serves images at `/assets/{filename}` or  `/images/{filename}`
 /// - Serves a simple HTML UI for preview and deletion
 /// - Handles POST `/delete` requests to remove selected images from disk
 ///
 /// Automatically opens the browser to preview the UI.
-Future<void> startServer(String folderPath) async {
-  final assetsDir = Directory('$folderPath/assets'); // use passed folder path
+Future<void> startServer(String folderPath, String absPath, String args) async {
+  String directoryName = "/assets/";
+  late Directory assetsDir;
+  if (folderPath.contains("/")) {
+    assetsDir = Directory(folderPath);
+  } else {
+    assetsDir = Directory('$folderPath/assets'); // use passed folder path;
+  }
+
+  final alternateAssetsDir = Directory('$folderPath/images');
   print(':rocket: Scanning folder: ${assetsDir.path}');
-  if (!await assetsDir.exists()) {
-    print(':x: No "assets" folder found at ${assetsDir.path}');
+  final assetExist = await assetsDir.exists();
+  final alternateAssetExist = await alternateAssetsDir.exists();
+
+  if (!assetExist && alternateAssetExist) {
+    assetsDir = alternateAssetsDir;
+    directoryName = "/images/";
+  }
+  if (!assetExist && !alternateAssetExist) {
+    print(':x: No "assets" or "Images" folder found at ${assetsDir.path}');
     exit(1);
   }
   final server = await HttpServer.bind(InternetAddress.loopbackIPv4, port);
@@ -26,11 +41,10 @@ Future<void> startServer(String folderPath) async {
   openBrowser('http://localhost:$port');
   await for (HttpRequest request in server) {
     final path = request.uri.path;
-    print(path);
     // Serve image files from assets
-    if (path.startsWith('/assets/')) {
+    if (path.startsWith(directoryName)) {
       // Always treat this as a path RELATIVE to assetsDir
-      final relative = path.replaceFirst('/assets/', '');
+      final relative = path.replaceFirst(directoryName, '');
       final file = File('${assetsDir.path}${Platform.pathSeparator}$relative');
       if (await file.exists()) {
         request.response.headers.contentType =
@@ -93,28 +107,9 @@ Future<void> startServer(String folderPath) async {
                 .lengthSync())
     };
     request.response.headers.contentType = ContentType.html;
-    request.response.write(generateHtml(images, imageSizes));
+    String absolutePath = args.contains("/") ? absPath : "$absPath/assets";
+    request.response.write(
+        generateHtml(images, imageSizes, "$absolutePath/", directoryName));
     await request.response.close();
   }
 }
-
-/// Example helper for getImages: returns a list of image paths RELATIVE to assetsDir
-///
-/// Modify your actual getImages to use similar logic
-// Future<List<String>> getImages(Directory assetsDir, Directory rootDir) async {
-//   final List<String> imagePaths = [];
-//   await for (final entity
-//       in assetsDir.list(recursive: true, followLinks: false)) {
-//     if (entity is File &&
-//         (entity.path.endsWith('.png') ||
-//             entity.path.endsWith('.jpg') ||
-//             entity.path.endsWith('.jpeg'))) {
-//       // We want relative path from assetsDir
-//       final relativePath = entity.path
-//           .substring(assetsDir.path.length + 1)
-//           .replaceAll('\\', '/'); // Normalize for web
-//       imagePaths.add(relativePath);
-//     }
-//   }
-//   return imagePaths;
-// }

@@ -23,8 +23,25 @@ Future<List<String>> getImages(
   final allImages = <String>[];
   final usedImages = <String>{};
 
+  // Folders to exclude (top-level or nested)
+  final excludeDirs = {
+    'build',
+    'android',
+    'ios',
+    'web',
+    'macos',
+    'linux',
+    'windows',
+  };
+
   await for (final file in assetsDir.list(recursive: true)) {
     if (file is File && _isImage(file.path)) {
+      // Skip if path contains any excluded folder name
+      final parts = file.path.split(Platform.pathSeparator);
+      if (parts.any((p) => excludeDirs.contains(p))) {
+        continue;
+      }
+
       // Use package:path to get the relative path from assetsDir
       final relativePath = p
           .relative(file.path, from: assetsDir.path)
@@ -33,7 +50,12 @@ Future<List<String>> getImages(
     }
   }
 
-  final libDir = Directory(p.join(projectRoot.path, 'lib'));
+  Directory updatedDataDirectory = Directory(projectRoot.path);
+  if (projectRoot.path.contains("/")) {
+    updatedDataDirectory = Directory(
+        projectRoot.path.replaceAll("/assets", "").replaceAll("/images", ''));
+  }
+  final libDir = Directory(p.join(updatedDataDirectory.path, 'lib'));
 
   if (!await libDir.exists()) {
     print('⚠️ Warning: lib folder does not exist: ${libDir.path}');

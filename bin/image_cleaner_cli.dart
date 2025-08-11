@@ -40,6 +40,22 @@ void main(List<String> arguments) async {
         'Usage: dart run bin/image_cleaner_cli.dart [options] <project_folder>');
     stdout.writeln('\nOptions:');
     stdout.writeln(parser.usage);
+
+    // Extra section for arguments
+    stdout.writeln('''
+Arguments:
+  <project_folder>
+    Path to your Flutter/Dart project root or to a specific assets/images folder.
+    You can pass either a relative or absolute path.
+
+Examples:
+  dart run bin/image_cleaner_cli.dart example/assets
+  dart run bin/image_cleaner_cli.dart example/images
+  dart run bin/image_cleaner_cli.dart example
+
+If omitted, the current working directory will be used.
+  ''');
+
     exit(0);
   }
 
@@ -57,8 +73,12 @@ void main(List<String> arguments) async {
 
   if (argResults['dry-run']) {
     stdout.writeln('🧪 Performing dry run...');
-
-    final assetsDir = Directory(p.join(folderPath, 'assets'));
+    late Directory assetsDir;
+    if (folderPath.contains("/")) {
+      assetsDir = Directory(folderPath);
+    } else {
+      assetsDir = Directory(p.join(folderPath, 'assets'));
+    }
     final projectRootDir = Directory(folderPath);
 
     final unusedImages = await getImages(assetsDir, projectRootDir);
@@ -73,6 +93,7 @@ void main(List<String> arguments) async {
     }
   } else {
     stdout.writeln('🚀 Starting image cleaner preview server...');
-    startServer(folderPath);
+
+    startServer(folderPath, directory.absolute.path, folderPath);
   }
 }
