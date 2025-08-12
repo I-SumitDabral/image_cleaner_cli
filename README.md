@@ -17,7 +17,7 @@ Clean up your codebase with an interactive, browser-based preview of unused imag
 
 ## ✅ Features
 
-- 🔍 Detect unused images in your Flutter project's `assets/` folder  
+- 🔍 Detect unused images in your Flutter project's `assets/` folder by default (e.g., running `image_cleaner_cli example` will only check `assets/`). If `assets/` doesn't exist, it will check `images/`. To scan a custom folder, pass its relative path as an argument.
 - 🧪 **Dry-run mode** (`--dry-run`) to preview without deleting  
 - 🌐 Automatically launches a **local interactive HTML preview**  
 - 🗑️ Delete selected images directly via the browser UI  
@@ -81,33 +81,28 @@ dart run bin/image_cleaner_cli.dart --folder /path/to/your/flutter/project
 ```
 
 ---
-▶️ Usage
-Arguments:
+### ▶️ Usage Arguments:
 
-css
-Copy
-Edit
-  <project_folder>
-    Path to your Flutter/Dart project root or to a specific assets/images folder.
-    You can pass either a relative or absolute path.
-Examples:
+`<project_folder>`  
+Path to your Flutter/Dart project root or to a specific assets/images folder. You can pass either a relative or absolute path.
 
-bash
-Copy
-Edit
-dart run bin/image_cleaner_cli.dart example/assets
-dart run bin/image_cleaner_cli.dart example/images
-dart run bin/image_cleaner_cli.dart example
+**Examples:**
+
+```bash
+image_cleaner_cli example/assets
+image_cleaner_cli example/images
+image_cleaner_cli example
+```
+
 If omitted, the current working directory will be used.
 
 By default, the tool checks for an assets/ folder; if none is found, it checks for an images/ folder.
+
 If you want to scan a custom folder, pass it as an argument:
 
-bash
-Copy
-Edit
-dart run bin/image_cleaner_cli.dart -- example/customFolder
-
+```bash
+image_cleaner_cli example/customFolder
+```
 ## ⚙️ CLI Options
 
 | Flag          | Alias | Description                                |
