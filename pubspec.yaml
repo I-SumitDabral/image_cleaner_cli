@@ -2,6 +2,8 @@ name: image_cleaner_cli
 description: A Dart CLI tool to detect, preview, and delete unused or unwanted image assets from your Flutter project.
 version: 0.0.5
 repository: https://github.com/I-SumitDabral/image_cleaner_cli
+issue_tracker: https://github.com/I-SumitDabral/image_cleaner_cli/issues
+homepage: https://github.com/I-SumitDabral/image_cleaner_cli
 
 environment:
   sdk: ">=3.3.0 <4.0.0"
