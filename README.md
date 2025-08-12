@@ -81,6 +81,32 @@ dart run bin/image_cleaner_cli.dart --folder /path/to/your/flutter/project
 ```
 
 ---
+▶️ Usage
+Arguments:
+
+css
+Copy
+Edit
+  <project_folder>
+    Path to your Flutter/Dart project root or to a specific assets/images folder.
+    You can pass either a relative or absolute path.
+Examples:
+
+bash
+Copy
+Edit
+dart run bin/image_cleaner_cli.dart example/assets
+dart run bin/image_cleaner_cli.dart example/images
+dart run bin/image_cleaner_cli.dart example
+If omitted, the current working directory will be used.
+
+By default, the tool checks for an assets/ folder; if none is found, it checks for an images/ folder.
+If you want to scan a custom folder, pass it as an argument:
+
+bash
+Copy
+Edit
+dart run bin/image_cleaner_cli.dart -- example/customFolder
 
 ## ⚙️ CLI Options
 
