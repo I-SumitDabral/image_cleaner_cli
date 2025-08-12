@@ -1,6 +1,15 @@
 
 # 🧼 image_cleaner_cli
 
+[![Pub Version](https://img.shields.io/pub/v/image_cleaner_cli.svg)](https://pub.dev/packages/image_cleaner_cli)
+[![Pub Points](https://img.shields.io/pub/points/image_cleaner_cli.svg)](https://pub.dev/packages/image_cleaner_cli/score)
+[![Likes](https://img.shields.io/pub/likes/image_cleaner_cli.svg)](https://pub.dev/packages/image_cleaner_cli)
+[![GitHub Stars](https://img.shields.io/github/stars/I-SumitDabral/image_cleaner_cli.svg?style=social&label=Star)](https://github.com/I-SumitDabral/image_cleaner_cli)
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/I-SumitDabral/image_cleaner_cli/blob/main/LICENSE)
+
+<!-- Optional Badges -->
+[![Code Coverage](https://codecov.io/gh/I-SumitDabral/image_cleaner_cli/branch/main/graph/badge.svg)](https://codecov.io/gh/I-SumitDabral/image_cleaner_cli)
+
 **A Dart CLI tool to detect, preview, and delete unused image assets in your Flutter project.**
 
 Clean up your codebase with an interactive, browser-based preview of unused images.
@@ -114,10 +123,11 @@ image_cleaner_cli example/customFolder
 
 ## 🛠 How It Works
 
-1. Scans your `assets/` and `images/` directory.
-2. Finds image files not referenced in any `.dart` files.
-3. Starts a local web server (`http://localhost:8080`).
-4. Opens an interactive UI where you can:
+1. Checks if an `assets/` folder exists in the target path, if yes, scans it; if not, scans `images/`.
+2. You can also pass a custom folder’s relative path to scan instead.
+3. Finds image files not referenced in any `.dart` files.
+4. Starts a local web server (`http://localhost:8080`).
+5. Opens an interactive UI where you can:
    - ✅ Review all unused images.
    - 🗑️ Select and delete them safely with a single click.
 
@@ -208,15 +218,4 @@ If this CLI saves you time and clutter, please consider:
 - ⭐ Starring the project on [GitHub](https://github.com/I-SumitDabral/image_cleaner_cli)
 - 📢 Sharing it with fellow developers
 - 🐛 Reporting issues or suggesting features
-
-## 📦 image_cleaner_cli
-
-[![Pub Version](https://img.shields.io/pub/v/image_cleaner_cli.svg)](https://pub.dev/packages/image_cleaner_cli)
-[![Pub Points](https://img.shields.io/pub/points/image_cleaner_cli.svg)](https://pub.dev/packages/image_cleaner_cli/score)
-[![Likes](https://img.shields.io/pub/likes/image_cleaner_cli.svg)](https://pub.dev/packages/image_cleaner_cli)
-[![GitHub Stars](https://img.shields.io/github/stars/I-SumitDabral/image_cleaner_cli.svg?style=social&label=Star)](https://github.com/I-SumitDabral/image_cleaner_cli)
-[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/I-SumitDabral/image_cleaner_cli/blob/main/LICENSE)
-
-<!-- Optional Badges -->
-[![Code Coverage](https://codecov.io/gh/I-SumitDabral/image_cleaner_cli/branch/main/graph/badge.svg)](https://codecov.io/gh/I-SumitDabral/image_cleaner_cli)
 
