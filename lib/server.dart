@@ -33,7 +33,7 @@ Future<void> startServer(String folderPath, String absPath, String args) async {
     directoryName = "/images/";
   }
   if (!assetExist && !alternateAssetExist) {
-    print(':x: No "assets" or "Images" folder found at ${assetsDir.path}');
+    print(':x: No "assets" or "images" folder found at ${assetsDir.path}');
     exit(1);
   }
   final server = await HttpServer.bind(InternetAddress.loopbackIPv4, port);

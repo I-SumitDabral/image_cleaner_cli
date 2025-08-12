@@ -17,7 +17,7 @@ Clean up your codebase with an interactive, browser-based preview of unused imag
 
 ## ✅ Features
 
-- 🔍 Detect unused images in your Flutter project's `assets/` folder  
+- 🔍 Detect unused images in your Flutter project's `assets/` folder by default (e.g., running `image_cleaner_cli example` will only check `assets/`). If `assets/` doesn't exist, it will check `images/`. To scan a custom folder, pass its relative path as an argument.
 - 🧪 **Dry-run mode** (`--dry-run`) to preview without deleting  
 - 🌐 Automatically launches a **local interactive HTML preview**  
 - 🗑️ Delete selected images directly via the browser UI  
@@ -53,7 +53,7 @@ dart pub global activate image_cleaner_cli <version>
 _Example:_
 
 ```bash
-dart pub global activate image_cleaner_cli 0.0.3
+dart pub global activate image_cleaner_cli 0.0.5
 ```
 
 ---
@@ -71,23 +71,43 @@ dart run bin/image_cleaner_cli.dart
 ### 📂 Scan a Specific Project Folder
 
 ```bash
-image_cleaner_cli --folder /path/to/your/flutter/project
+image_cleaner_cli /path/to/your/flutter/project
 ```
 
 Or, when running locally:
 
 ```bash
-dart run bin/image_cleaner_cli.dart --folder /path/to/your/flutter/project
+dart run bin/image_cleaner_cli.dart /path/to/your/flutter/project
 ```
 
 ---
+### ▶️ Usage Arguments:
 
+`<project_folder>`  
+Path to your Flutter/Dart project root or to a specific assets/images folder. You can pass either a relative or absolute path.
+
+**Examples:**
+
+```bash
+image_cleaner_cli example/assets
+image_cleaner_cli example/images
+image_cleaner_cli example
+```
+
+If omitted, the current working directory will be used.
+
+By default, the tool checks for an assets/ folder; if none is found, it checks for an images/ folder.
+
+If you want to scan a custom folder, pass it as an argument:
+
+```bash
+image_cleaner_cli example/customFolder
+```
 ## ⚙️ CLI Options
 
 | Flag          | Alias | Description                                |
 |---------------|-------|--------------------------------------------|
 | `--dry-run`   | `-d`  | Preview unused images (no deletion)        |
-| `--folder`    |       | Set root directory to scan (optional)      |
 | `--help`      | `-h`  | Display help and usage info                |
 
 ---
@@ -120,14 +140,14 @@ dart run bin/image_cleaner_cli.dart --folder /path/to/your/flutter/project
 
 ## 📁 Requirements
 
-- Flutter project with images stored under `assets/`
+- Flutter project with images stored under `assets/` or `images/`
 - Image paths must be referenced directly in `.dart` files as strings (no dynamic paths)
 
 ---
 
 ## 📌 Version
 
-**Current:** `0.0.4`  
+**Current:** `0.0.5`  
 Check [pub.dev → image_cleaner_cli](https://pub.dev/packages/image_cleaner_cli) for latest.
 
 ---
@@ -152,7 +172,7 @@ You can also use `image_cleaner_cli` **programmatically** in your project:
 
 ```yaml
 dependencies:
-  image_cleaner_cli: ^0.0.4
+  image_cleaner_cli: ^0.0.5
 ```
 
 ### Then run:
@@ -198,6 +218,5 @@ If this CLI saves you time and clutter, please consider:
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/I-SumitDabral/image_cleaner_cli/blob/main/LICENSE)
 
 <!-- Optional Badges -->
-[![Build Status](https://github.com/I-SumitDabral/image_cleaner_cli/actions/workflows/build.yml/badge.svg)](https://github.com/I-SumitDabral/image_cleaner_cli/actions)
 [![Code Coverage](https://codecov.io/gh/I-SumitDabral/image_cleaner_cli/branch/main/graph/badge.svg)](https://codecov.io/gh/I-SumitDabral/image_cleaner_cli)
 
